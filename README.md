@@ -112,9 +112,24 @@ LLMs should never be trusted for user access control. As such, Row Level Securit
 └────────────┘
 ```
 
-## Supabase Implementation
+## Supabase + Langchain Implementation
 
 Supabase has built in identity and automates JWT handling.  
+
+We will use Langchain to create an AI Agent that calls a tool to connect to a scoped Supabase client. 
+
+*High-Level Architecture*
+1) Frontend: Sends the user's prompt and authentication cookies/headers to your Next.js API route.
+
+2) API Route:
+
+- Extracts the access_token (JWT) from the request.
+
+- Initializes a Tool that uses this specific JWT to create a scoped Supabase client.
+
+- Passes this tool to the LangChain Agent.
+
+3) Supabase: Receives the query with the user's JWT, automatically applying RLS policies.
 
 
 ## Postgres Implementation
